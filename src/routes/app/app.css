@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.input {@apply focus:bg-base-300/75 focus:scale-100 duration-300 scale-[0.97] placeholder:opacity-50;}
+.input[type="password"] {
+    @apply placeholder:transform placeholder:scale-x-[1.8] hover:placeholder:scale-x-100 placeholder:translate-x-[6.25rem] hover:placeholder:translate-x-0 placeholder:blur-sm placeholder:hover:blur-0 placeholder:!duration-300 placeholder:!transition-all;
+}
+.v {@apply invalid:ring-2 invalid:bg-error/10 valid:bg-success/10 invalid:ring-error valid:ring-2 valid:ring-success;}
+.sCard {@apply p-3 bg-base-300 rounded-md flex flex-row align-middle items-center gap-4 max-w-fit w-fit;}
+.uCard {@apply p-3 bg-base-300 rounded-md flex flex-row align-middle items-center gap-4 max-w-fit w-fit }
+.catwayRunners {@apply flex flex-col items-center align-middle}

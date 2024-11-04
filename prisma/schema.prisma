@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  username String
+  email    String
+  password String
+  sessions Session[]
+  settings Settings?
+}
+
+model Session {
+  unused           String @id @default(cuid())
+  startedTimestamp Int
+  name             String
+  dockerId         String @unique
+  userId           Int    @unique
+  user             User   @relation(fields: [userId], references: [id])
+}
+
+model Settings {
+  unused      Int     @id @default(autoincrement())
+  displayName String
+  hasAdmin    Boolean
+  userId      Int     @unique
+  user        User    @relation(fields: [userId], references: [id])
+}
+
+model Runner {
+  unused               Int             @id @default(autoincrement())
+  url                  String
+  ServerSettings       ServerSettings? @relation(fields: [serverSettingsUnused], references: [unused])
+  serverSettingsUnused String?
+}
+
+model ServerSettings {
+  runners         Runner[]
+  signups         Boolean       @default(true)
+  unused          String        @id @default(cuid())
+  container       Container[]
+  containerunused String?
+}
+
+model Container {
+  unused         String           @id @default(cuid())
+  friendlyName   String
+  imageUrl       String
+  ram            Int
+  cores          Int
+  ServerSettings ServerSettings[]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
